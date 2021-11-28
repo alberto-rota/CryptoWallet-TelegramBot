@@ -1,0 +1,3 @@
+home - Display the main menu
+report - Report an issue with the bot
+helpme - Display a help message
