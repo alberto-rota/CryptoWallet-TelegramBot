@@ -104,7 +104,7 @@ def link_to_issues(update,context):
         text=
 """If you encounter a bug, problem or if you wanna suggest an improvement,
 please report an issue on the official GitHub page of the project following
-this link: \nhttps://github.com/alberto-rota/CryptoWallet-Tracket-TelegramBot/issues
+this link: \nhttps://github.com/alberto-rota/CryptoWallet-TelegramBot/issues
 """,
         parse_mode=telegram.ParseMode.HTML
     )
