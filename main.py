@@ -23,6 +23,7 @@ from telegram.ext import (Updater,
 )
 
 import datetime
+import os
 
 import initializers as init
 import commands_wallet, commands_misc, commands_assets, commands_notifications
@@ -128,6 +129,7 @@ def main():
 
     print(">> "+datetime.datetime.now().strftime("[%d/%m/%Y-%H:%M:%S]-BOT: ")+
         " Callbacks initialized. Polling started")
+    if not os.path.isdir("savedfigs"): os.makedirs("savedfigs")
     updater.start_polling()
     updater.idle()
     return
