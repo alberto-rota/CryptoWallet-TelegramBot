@@ -107,7 +107,7 @@ def report(client, asset):
         "1 month":  df1y['open'].iloc[-4],
         "1 week":   df1y['open'].iloc[-2],
         "24 hours": df1w['open'].iloc[-25],
-        "1 hour":   df1w['open'].iloc[0],
+        "1 hour":   df1w['open'].iloc[-2],
     }
     message = ""
     for k in variations.keys():
