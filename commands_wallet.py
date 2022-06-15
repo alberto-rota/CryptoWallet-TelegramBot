@@ -119,7 +119,7 @@ Make sure you do it from the <u>💰Set Wallet</u> button on the main menu""",
     for a in df['asset']:
         #############################################################################
         figpath,cptn = create.chart(client, a,button2range[timerange])
-        reportmsg = create.report(client, a)
+        # reportmsg = create.report(client, a)
         #############################################################################
         context.bot.send_photo(
             chat_id=update.effective_chat.id, 

@@ -149,7 +149,7 @@ def check_todo(context):
     sendtime2 =             {'h':12,'m':0}
     emptybufferfoldertime = {'h':0, 'm':0}
 
-    volatilitycheck = {'1h':2,'4h':4,'12h':6,'24h':8}
+    volatilitycheck = {'1h':5,'4h':7.5,'12h':10,'24h':12}
 
     # Saves current timestamp
     time =datetime.datetime.now()
@@ -169,7 +169,7 @@ def check_todo(context):
                 for a in df['asset']:
                     #############################################################################
                     figpath,cptn = create.chart(client, a,'1day')
-                    reportmsg = create.report(client, a)
+                    # reportmsg = create.report(client, a)
                     #############################################################################
                     context.bot.send_photo(
                         chat_id=user['ID'], 
@@ -192,7 +192,7 @@ def check_todo(context):
                 for a in df['asset']:
                     #############################################################################
                     figpath,cptn = create.chart(client, a,'12hour')
-                    reportmsg = create.report(client, a)
+                    # reportmsg = create.report(client, a)
                     #############################################################################
                     context.bot.send_photo(
                         chat_id=user['ID'], 
@@ -214,7 +214,7 @@ def check_todo(context):
                 for a in df['asset']:
                     #############################################################################
                     figpath,cptn = create.chart(client, a,'12hour')
-                    reportmsg = create.report(client, a)
+                    # reportmsg = create.report(client, a)
                     #############################################################################
                     context.bot.send_photo(
                         chat_id=user['ID'], 

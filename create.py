@@ -59,10 +59,11 @@ def chart(client, asset, begin):
 
     variation=(df['close'].iloc[-1]-df['open'].iloc[0])/df['open'].iloc[0]*100
     variation_str = "{:.2f}".format(variation)
+    currentprice_str = "{:.2f}".format(df['close'].iloc[-1])
     if variation>=0:
-        cptn = f"🟩{exchange.replace('USDT','').upper()}: <b>+{variation_str}%</b> 🟩 [since {begin}]"
+        cptn = f"🟩{exchange.replace('USDT','').upper()}: <b> {currentprice_str}$ | +{variation_str}%</b> 🟩 [since {begin}]"
     else:
-        cptn = f"🟥{exchange.replace('USDT','').upper()}: <i>{variation_str}%</i> 🟥 [since {begin}]"
+        cptn = f"🟥{exchange.replace('USDT','').upper()}: <i> {currentprice_str}$ | {variation_str}%</i> 🟥 [since {begin}]"
     cptn=cptn+"\n-------------------------------------------------------------------\n"+report(client,asset)
     return figpath, cptn
 
@@ -95,19 +96,27 @@ def report(client, asset):
         df1w[var] = pd.to_numeric(df1w[var], downcast="float")
 
     variations = {
-        "1 year": (df1y['close'].iloc[-1]-df1y['open'].iloc[0])/df1y['open'].iloc[0]*100,
-        "1 month": (df1y['close'].iloc[-1]-df1y['open'].iloc[-4])/df1y['open'].iloc[-4]*100,
-        "1 week": (df1y['close'].iloc[-1]-df1y['open'].iloc[-2])/df1y['open'].iloc[-2]*100,
+        "1 year":   (df1y['close'].iloc[-1]-df1y['open'].iloc[0])/df1y['open'].iloc[0]*100,
+        "1 month":  (df1y['close'].iloc[-1]-df1y['open'].iloc[-4])/df1y['open'].iloc[-4]*100,
+        "1 week":   (df1y['close'].iloc[-1]-df1y['open'].iloc[-2])/df1y['open'].iloc[-2]*100,
         "24 hours": (df1w['close'].iloc[-1]-df1w['open'].iloc[-25])/df1w['open'].iloc[-25]*100,
-        "1 hour": (df1w['close'].iloc[-1]-df1w['open'].iloc[-2])/df1w['open'].iloc[0]*100,
+        "1 hour":   (df1w['close'].iloc[-1]-df1w['open'].iloc[-2])/df1w['open'].iloc[-2]*100,
     }
-    message = f"<b>{asset.upper()}</b>:\n"
+    prices = {
+        "1 year":   df1y['open'].iloc[0],
+        "1 month":  df1y['open'].iloc[-4],
+        "1 week":   df1y['open'].iloc[-2],
+        "24 hours": df1w['open'].iloc[-25],
+        "1 hour":   df1w['open'].iloc[0],
+    }
+    message = ""
     for k in variations.keys():
         variation_str =  "{:.2f}".format(variations[k])
+        price_str =  "{:.2f}".format(prices[k])
         if variations[k]>=0:
-            message=message+f"🟩 <b>{k} | +{variation_str}%</b>\n"
+            message=message+f"🟩 <b>{k} | +{variation_str}% [was {price_str}$]</b> \n"
         else:
-            message=message+ f"🟥 <i>{k} | {variation_str}%</i>\n"
+            message=message+ f"🟥 <i>{k} | {variation_str}% [was {price_str}$]</i> \n"
     
     return message
 
@@ -160,10 +169,13 @@ def profits(client,user_id):
     # message=message+"------------------------------------\n"
 
     totalprofituer=total_profit/float(USD2EUR['price'])
+    variation = (currenteur-investedeur)/investedeur
+    
+    variation_str = "{:.2f}".format(variation*100)
     totalprofit_str =  "{:.2f}".format(total_profit)
     totalprofiteur_str =  "{:.2f}".format(totalprofituer)
     if total_profit>=0:
-        message=message+f"🟩 <b>Total</b>: <b>+{totalprofit_str}$</b> | <b>+{totalprofiteur_str}€</b>\n"
+        message=message+f"🟩 <b>Total</b>: <b>+{totalprofit_str}$</b> | <b>{variation_str}%</b> | <b>+{totalprofiteur_str}€</b>\n"
     else:        
-        message=message+f"🟥 <b>Total</b>: <i>{totalprofit_str}$</i> | <i>{totalprofiteur_str}€</i>\n"
+        message=message+f"🟥 <b>Total</b>: <i>{totalprofit_str}$</i> | <i>{variation_str}%</i> | <i>{totalprofiteur_str}€</i>\n"
     return message
