@@ -9,7 +9,7 @@ The bot cannot therefore handle too many requests at a time withoud noticeble de
 
 The code has been tested on *Python 3.9.5*. Here is the list of the required dependencies, installable with:
 ```
-pip install python-telegramm-bot 
+pip install python-telegram-bot 
 pip install python-binance 
 pip install mplfinance
 pip install numpy
